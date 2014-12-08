@@ -12,7 +12,7 @@ namespace SanderVanVliet.WcfDataSource
         private readonly MethodInfo _operation;
         private readonly IDataParameterCollection _parameters;
         private readonly ServiceProxy _proxy;
-        private int _resultIndex;
+        private int _resultIndex = -1;
         private object[] _data;
         private bool _operationWasCalled;
 
@@ -32,7 +32,7 @@ namespace SanderVanVliet.WcfDataSource
             {
                 typeToGetFieldsFrom = _operation.ReturnType.GetElementType();
             }
-            else if (typeof (IEnumerable<>).IsAssignableFrom(_operation.ReturnType))
+            else if (typeof(IEnumerable<>).IsAssignableFrom(_operation.ReturnType))
             {
                 // It's a collection Jim, but not as we know it
                 var genericTypeDefinition = _operation
@@ -77,7 +77,7 @@ namespace SanderVanVliet.WcfDataSource
                 .Select(p =>
                 {
                     var isSet = parameters.SingleOrDefault(dparam => dparam.ParameterName == p.Name);
-                    
+
                     return isSet != null ? isSet.Value : null;
                 })
                 .ToArray();
@@ -87,9 +87,34 @@ namespace SanderVanVliet.WcfDataSource
         {
         }
 
+        public bool Read()
+        {
+            if (_data == null && !_operationWasCalled)
+            {
+                _data = GetDataFromOperation();
+                _resultIndex = 0;
+            }
+            else
+            {
+                _resultIndex++;
+            }
+
+            return _resultIndex < _data.Length;
+        }
+
+        public Type GetFieldType(int fieldIndex)
+        {
+            if (fieldIndex < 0 || fieldIndex >= FieldCount)
+            {
+                throw new ArgumentOutOfRangeException("fieldIndex");
+            }
+
+            return _fields[fieldIndex].PropertyType;
+        }
+
         public string GetName(int fieldIndex)
         {
-            if (fieldIndex < 0 || fieldIndex >= _fields.Length)
+            if (fieldIndex < 0 || fieldIndex >= FieldCount)
             {
                 throw new ArgumentOutOfRangeException("fieldIndex");
             }
@@ -99,7 +124,12 @@ namespace SanderVanVliet.WcfDataSource
 
         public int GetOrdinal(string fieldName)
         {
-            for (var i = 0; i < _fields.Length; i++)
+            if (string.IsNullOrEmpty(fieldName))
+            {
+                throw new ArgumentNullException("fieldName");
+            }
+
+            for (var i = 0; i < FieldCount; i++)
             {
                 if (_fields[i].Name == fieldName)
                 {
@@ -110,35 +140,18 @@ namespace SanderVanVliet.WcfDataSource
             throw new Exception("Field '" + fieldName + "' not found");
         }
 
-        public bool Read()
+        public object GetValue(int fieldIndex)
         {
-            if (_data == null && !_operationWasCalled)
-            {
-                _data = GetDataFromOperation();
-            }
-
-            if (_resultIndex >= _data.Length)
-            {
-                return false;
-            }
-
-            _resultIndex++;
-
-            return true;
-        }
-
-        public Type GetFieldType(int fieldIndex)
-        {
-            if (fieldIndex < 0 || fieldIndex >= _fields.Length)
+            if (fieldIndex < 0 || fieldIndex >= FieldCount)
             {
                 throw new ArgumentOutOfRangeException("fieldIndex");
             }
 
-            return _fields[fieldIndex].PropertyType;
-        }
+            if (_resultIndex < 0)
+            {
+                throw new InvalidOperationException("Data not loaded");
+            }
 
-        public object GetValue(int fieldIndex)
-        {
             var rowData = _data[_resultIndex];
 
             return _fields[fieldIndex].GetGetMethod().Invoke(rowData, null);

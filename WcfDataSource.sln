@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{C6C428
 		images\Usage-3.png = images\Usage-3.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanderVanVliet.WcfDataSource.Tests", "SanderVanVliet.WcfDataSource.Tests\SanderVanVliet.WcfDataSource.Tests.csproj", "{95094380-5597-44F1-9CE2-7559DF1E5368}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{910201C3-3C37-4FE0-A24E-FAE61EE0BED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{910201C3-3C37-4FE0-A24E-FAE61EE0BED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{910201C3-3C37-4FE0-A24E-FAE61EE0BED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95094380-5597-44F1-9CE2-7559DF1E5368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95094380-5597-44F1-9CE2-7559DF1E5368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95094380-5597-44F1-9CE2-7559DF1E5368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95094380-5597-44F1-9CE2-7559DF1E5368}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
