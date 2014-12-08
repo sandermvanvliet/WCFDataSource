@@ -29,6 +29,8 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
+#NCrunch
+_NCrunch_*
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
