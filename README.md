@@ -6,6 +6,11 @@ A SQL Server Reporting Services data source for WCF services.
 This Data Processing Extension (DPE) adds functionality to SSRS to consume WCF services a little bit easier that the currently existing XML datasource.  
 When you specify the URL and operation to use the extension will automatically determine the parameters for the operation and return the list of fields in the result. If the operation returns an array or collection it will return the fields of the entity in the collection.
 
+Releases
+===
+The latest release can be found [here](https://github.com/sandermvanvliet/WCFDataSource/releases/latest) Please log any feedback and/or issues in the tracker here on GitHub.  
+Note that v0.1 is the first release so YMMV when using this in a production environment. 
+
 Usage
 ===
 * In your report project in Visual Studio, create a new data source:  
