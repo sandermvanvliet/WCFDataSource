@@ -8,7 +8,16 @@ When you specify the URL and operation to use the extension will automatically d
 
 Usage
 ===
+* In your report project in Visual Studio, create a new data source:  
+![alt text](https://raw.githubusercontent.com/sandermvanvliet/WCFDataSource/master/images/Usage-0.png)  
+The connection string is the URL to the WCF service.
+* Set the command text field to the name of the operation you want to call:
+![alt text](https://raw.githubusercontent.com/sandermvanvliet/WCFDataSource/master/images/Usage-1.png)
+* Now add a new data set and use the previously created data source. Click on the `Refresh Fields` button to update the fields and parameters. You'll now see the new fields and parameters:
+![alt text](https://raw.githubusercontent.com/sandermvanvliet/WCFDataSource/master/images/Usage-2.png)  
+![alt text](https://raw.githubusercontent.com/sandermvanvliet/WCFDataSource/master/images/Usage-3.png)
 
+Please note that the report designer in Visual Studio creates parameters of type text. This can cause issues if the value isn't convertible to the actual parameter type so you'll have to change those manually.
 
 A word of warning
 ===
