@@ -18,7 +18,11 @@ namespace SanderVanVliet.WcfDataSource
 
         public void Dispose()
         {
-            _proxy?.Client.Dispose();
+            // ReSharper disable once UseNullPropagation
+            if (_proxy != null)
+            {
+                _proxy.Client.Dispose();
+            }
         }
 
         public IDataReader ExecuteReader(CommandBehavior behavior)
