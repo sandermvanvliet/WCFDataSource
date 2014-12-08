@@ -32,7 +32,7 @@ namespace SanderVanVliet.WcfDataSource
             {
                 typeToGetFieldsFrom = _operation.ReturnType.GetElementType();
             }
-            else if (typeof(IEnumerable<>).IsAssignableFrom(_operation.ReturnType))
+            else if (_operation.ReturnType.IsGenericType && typeof(IEnumerable<>).IsAssignableFrom(_operation.ReturnType.GetGenericTypeDefinition()))
             {
                 // It's a collection Jim, but not as we know it
                 var genericTypeDefinition = _operation
@@ -61,7 +61,14 @@ namespace SanderVanVliet.WcfDataSource
 
         protected virtual object[] GetDataFromOperation()
         {
-            var retval = _operation.Invoke(_proxy.Client, GetOperationParameters()) as object[];
+            var data = _operation.Invoke(_proxy.Client, GetOperationParameters());
+
+            var retval = data as object[];
+            
+            if (retval == null && data != null)
+            {
+                retval = new[] { data };
+            }
 
             _operationWasCalled = true;
 
