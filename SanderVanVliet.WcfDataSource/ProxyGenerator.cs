@@ -65,6 +65,13 @@ namespace SanderVanVliet.WcfDataSource
             var binding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly);
             binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Windows;
             binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Windows;
+            binding.MaxReceivedMessageSize = 52428800;
+            binding.MaxBufferSize = 52428800;
+            binding.MaxBufferPoolSize = 0;
+            binding.ReaderQuotas.MaxStringContentLength = 8192;
+            binding.ReaderQuotas.MaxArrayLength = 16384;
+            binding.ReaderQuotas.MaxBytesPerRead = 4096;
+            binding.ReaderQuotas.MaxNameTableCharCount = 16384;
 
             var clientInstance = Activator.CreateInstance(proxyType, new object[] {binding, endpoint});
 
